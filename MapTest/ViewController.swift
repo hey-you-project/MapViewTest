@@ -11,47 +11,54 @@ import MapKit
 
 class ViewController: UIViewController {
   
-  var HORIZONTAL_CURVE_OFFSET = 2
-  var VERTICAL_CURVE_OFFSET = 15
+  // MARK: Child View Controllers
+  var mapView : MKMapView!
+  var currentCommentViewController : CommentViewController!
+  var sideMenuVC : SideMenuViewController!
   
+  // MARK: Subviews and UI Elements
+  var originalCircleCenter : CGPoint!
+  var draggableCircle: UIView!
+  var dragCircleWrapper : UIView!
+  
+  // MARK: Color Palette
   let customDarkOrange  = UIColor(red: 250 / 255.0, green: 105 / 255.0, blue: 0   / 255.0, alpha: 1)
   let customLightOrange = UIColor(red: 243 / 255.0, green: 134 / 255.0, blue: 48  / 255.0, alpha: 1)
   let customBlue        = UIColor(red: 105 / 255.0, green: 210 / 255.0, blue: 231 / 255.0, alpha: 1)
   let customTeal        = UIColor(red: 167 / 255.0, green: 219 / 255.0, blue: 216 / 255.0, alpha: 1)
   let customBeige       = UIColor(red: 224 / 255.0, green: 228 / 255.0, blue: 204 / 255.0, alpha: 1)
   
-  var currentCommentViewController : CommentViewController!
-  var mapView : MKMapView!
-  var originalCircleCenter : CGPoint!
-  var draggableCircle: UIView!
-
+  // MARK: Constants
+  var HORIZONTAL_CURVE_OFFSET = 2
+  var VERTICAL_CURVE_OFFSET = 15
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    mapView = MKMapView(frame: self.view.frame)
-    self.view.addSubview(mapView)
+    self.view.backgroundColor = customTeal
     
-    currentCommentViewController = CommentViewController(nibName: "CommentViewController", bundle: NSBundle.mainBundle());
-    
-    let recog2 = UITapGestureRecognizer()
-    recog2.addTarget(self, action: "didTap:")
-    mapView.addGestureRecognizer(recog2)
-    
+    setupSideMenu()
+    setupMapView()
     addCircleView()
     addHamburgerMenuCircle()
-    
+    setupGestureRecognizers()
+
+    currentCommentViewController = CommentViewController(nibName: "CommentViewController", bundle: NSBundle.mainBundle())
+
   }
   
   
   func addCircleView() {
-    var circleView = UIView(frame: CGRect(x: self.view.frame.width - 100, y: self.view.frame.height - 100, width: 60, height: 60))
-    circleView.layer.cornerRadius = circleView.frame.height / 2
-    circleView.backgroundColor = customBeige
-    circleView.layer.shadowColor = UIColor.blackColor().CGColor
-    circleView.layer.shadowOpacity = 0.6
-    circleView.layer.shadowRadius = 3.0
-    circleView.layer.shadowOffset = CGSize(width: 0, height: 3)
     
-    self.draggableCircle = UIView(frame: CGRect(origin: CGPoint(x: circleView.frame.origin.x + 17.5, y: circleView.frame.origin.y + 17.5), size: CGSize(width: 25, height: 25)))
+    dragCircleWrapper = UIView(frame: CGRect(x: self.view.frame.width - 100, y: self.view.frame.height - 100, width: 60, height: 60))
+    dragCircleWrapper.layer.cornerRadius = dragCircleWrapper.frame.height / 2
+    dragCircleWrapper.backgroundColor = customBeige
+    dragCircleWrapper.layer.shadowColor = UIColor.blackColor().CGColor
+    dragCircleWrapper.layer.shadowOpacity = 0.6
+    dragCircleWrapper.layer.shadowRadius = 3.0
+    dragCircleWrapper.layer.shadowOffset = CGSize(width: 0, height: 3)
+    
+    self.draggableCircle = UIView(frame: CGRect(origin: CGPoint(x: dragCircleWrapper.frame.origin.x + 17.5, y: dragCircleWrapper.frame.origin.y + 15), size: CGSize(width: 25, height: 25)))
     draggableCircle.layer.cornerRadius = draggableCircle.frame.height / 2
     draggableCircle.backgroundColor = customBlue
     self.originalCircleCenter = draggableCircle.center;
@@ -62,11 +69,11 @@ class ViewController: UIViewController {
     draggableCircle.layer.shadowOffset = CGSize(width: 0, height: 2)
     
     
-    self.view.addSubview(circleView)
+    self.view.addSubview(dragCircleWrapper)
     self.view.addSubview(draggableCircle)
     
     let dragger = UIPanGestureRecognizer()
-    dragger.addTarget(self, action: "didDragCircle:")
+    dragger.addTarget(self, action: "receivedDragGestureOnDragCircle:")
     draggableCircle.addGestureRecognizer(dragger)
     
   }
@@ -82,7 +89,7 @@ class ViewController: UIViewController {
     circleView.layer.shadowOffset = CGSize(width: 0, height: 3)
     self.view.addSubview(circleView)
     
-    var hamburgerLabel = UILabel(frame: CGRect(origin: CGPoint(x: circleView.bounds.origin.x + 20, y: circleView.bounds.origin.y + 17.5), size: CGSize(width: 25, height: 25)))
+    var hamburgerLabel = UILabel(frame: CGRect(origin: CGPoint(x: circleView.bounds.origin.x + 19, y: circleView.bounds.origin.y + 17.5), size: CGSize(width: 25, height: 25)))
     hamburgerLabel.text = "\u{e116}"
     hamburgerLabel.font = UIFont(name: "typicons", size: 30)
     hamburgerLabel.textColor = customDarkOrange
@@ -95,7 +102,7 @@ class ViewController: UIViewController {
     circleView.addSubview(hamburgerLabel)
     
     let tap = UITapGestureRecognizer()
-    tap.addTarget(self, action: "didTapHamburger:")
+    tap.addTarget(self, action: "receivedTapGestureOnHamburgerButton:")
     circleView.addGestureRecognizer(tap)
     
   }
@@ -153,16 +160,79 @@ class ViewController: UIViewController {
     
   }
   
-  func didTap(sender: UITapGestureRecognizer){
+  func receivedTapGestureOnMapView(sender: UITapGestureRecognizer){
     
+    unpopCurrentComment()
+    returnDragCircleToHomeBase()
+    
+  }
+  
+  func receivedDragGestureOnDragCircle(sender: UIPanGestureRecognizer){
+    
+    if sender.state == .Changed {
+      draggableCircle.center = sender.locationInView(self.view)
+    } else if sender.state == .Ended {
+      spawnPopupAtPoint(sender.locationInView(self.view))
+    }
+    
+  }
+  
+  func receivedTapGestureOnHamburgerButton(sender: UITapGestureRecognizer){
+    
+    if sender.state == .Ended {
+      println("Did press hamburger!")
+      self.toggleSideMenu()
+    }
+    
+  }
+  
+  func toggleSideMenu() {
+  
+    returnDragCircleToHomeBase()
+    unpopCurrentComment()
+    
+    UIView.animateWithDuration(0.4,
+      delay: 0.0,
+      usingSpringWithDamping: 0.7,
+      initialSpringVelocity: 0.4,
+      options: UIViewAnimationOptions.AllowUserInteraction,
+      animations: { () -> Void in
+        if self.mapView.frame.origin.x == 0{
+          self.mapView.center.x += 200
+          self.dragCircleWrapper.center.x += 200
+          self.draggableCircle.center.x += 200
+        } else {
+          self.mapView.center.x -= 200
+          self.dragCircleWrapper.center.x -= 200
+          self.draggableCircle.center = self.originalCircleCenter
+        }
+      }) { (success) -> Void in
+        return ()
+    }
+  }
+  
+  func returnDragCircleToHomeBase() {
     UIView.animateWithDuration(0.2,
       delay: 0.0,
       usingSpringWithDamping: 0.7,
       initialSpringVelocity: 0.4,
       options: UIViewAnimationOptions.AllowUserInteraction,
       animations: { () -> Void in
-        self.currentCommentViewController.view.alpha = 0
         self.draggableCircle.center = self.originalCircleCenter
+      },
+      completion: { (success) -> Void in
+        return ()
+    })
+  }
+  
+  func unpopCurrentComment() {
+    UIView.animateWithDuration(0.2,
+      delay: 0.0,
+      usingSpringWithDamping: 0.0,
+      initialSpringVelocity: 0.0,
+      options: UIViewAnimationOptions.AllowUserInteraction,
+      animations: { () -> Void in
+        self.currentCommentViewController.view.alpha = 0
       },
       completion: { (success) -> Void in
         self.currentCommentViewController.view.removeFromSuperview()
@@ -170,20 +240,38 @@ class ViewController: UIViewController {
     })
   }
   
-  func didDragCircle(sender: UIPanGestureRecognizer){
+  func setupSideMenu(){
     
-    if sender.state == .Changed {
-      draggableCircle.center = sender.locationInView(self.view)
-    } else if sender.state == .Ended {
-      spawnPopupAtPoint(sender.locationInView(self.view))
-    }
+    sideMenuVC = SideMenuViewController(nibName:"SideMenuViewController", bundle: NSBundle.mainBundle())
+    self.addChildViewController(sideMenuVC)
+    self.view.addSubview(sideMenuVC.view)
+    sideMenuVC.view.frame = CGRect(x: 0, y: 0, width: 200, height: self.view.frame.height)
+    sideMenuVC.view.backgroundColor = customTeal
+    
   }
   
-  func didTapHamburger(sender: UITapGestureRecognizer){
+  func setupMapView(){
     
-    if sender.state == .Ended {
-      //self.showSideMenu()
-    }
+    mapView = MKMapView(frame: self.view.frame)
+    self.view.addSubview(mapView)
+    mapView.clipsToBounds = false
+    mapView.layer.shadowColor = UIColor.blackColor().CGColor
+    mapView.layer.shadowOpacity = 0.6
+    mapView.layer.shadowRadius = 3.0
+    mapView.layer.shadowOffset = CGSize(width: -5, height: 0)
+    
+  }
+  
+  func setupGestureRecognizers() {
+    
+    let tapRecognizer = UITapGestureRecognizer()
+    tapRecognizer.addTarget(self, action: "receivedTapGestureOnMapView:")
+    mapView.addGestureRecognizer(tapRecognizer)
+    
+    let edgePanRecognizer = UIScreenEdgePanGestureRecognizer()
+    edgePanRecognizer.addTarget(self, action: "didPanFromLeftEdge:")
+    edgePanRecognizer.edges = UIRectEdge.Left
+    mapView.addGestureRecognizer(edgePanRecognizer)
     
   }
   

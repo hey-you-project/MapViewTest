@@ -19,6 +19,8 @@
 		7E1E95971A154C710040D0ED /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E1E95951A154C710040D0ED /* CommentViewController.xib */; };
 		7E1E95991A155C980040D0ED /* HEAVYWEI.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 7E1E95981A155C980040D0ED /* HEAVYWEI.TTF */; };
 		7E1E959B1A1565D70040D0ED /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1E959A1A1565D70040D0ED /* PopoverView.swift */; };
+		7E957A961A198C9400FE9F9F /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E957A941A198C9400FE9F9F /* SideMenuViewController.swift */; };
+		7E957A971A198C9400FE9F9F /* SideMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E957A951A198C9400FE9F9F /* SideMenuViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		7E1E95951A154C710040D0ED /* CommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentViewController.xib; sourceTree = "<group>"; };
 		7E1E95981A155C980040D0ED /* HEAVYWEI.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = HEAVYWEI.TTF; sourceTree = "<group>"; };
 		7E1E959A1A1565D70040D0ED /* PopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
+		7E957A941A198C9400FE9F9F /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		7E957A951A198C9400FE9F9F /* SideMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideMenuViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,8 @@
 			children = (
 				7E1E95711A1549890040D0ED /* AppDelegate.swift */,
 				7E1E95761A1549890040D0ED /* ViewController.swift */,
+				7E957A941A198C9400FE9F9F /* SideMenuViewController.swift */,
+				7E957A951A198C9400FE9F9F /* SideMenuViewController.xib */,
 				7E1E959A1A1565D70040D0ED /* PopoverView.swift */,
 				7E1E95941A154C710040D0ED /* CommentViewController.swift */,
 				7E1E95951A154C710040D0ED /* CommentViewController.xib */,
@@ -213,6 +219,7 @@
 				7E1E95971A154C710040D0ED /* CommentViewController.xib in Resources */,
 				7E09837E1A1974D600CC461B /* typicons.ttf in Resources */,
 				7E1E957A1A1549890040D0ED /* Main.storyboard in Resources */,
+				7E957A971A198C9400FE9F9F /* SideMenuViewController.xib in Resources */,
 				7E1E95991A155C980040D0ED /* HEAVYWEI.TTF in Resources */,
 				7E1E957F1A1549890040D0ED /* LaunchScreen.xib in Resources */,
 				7E1E957C1A1549890040D0ED /* Images.xcassets in Resources */,
@@ -237,6 +244,7 @@
 				7E1E95771A1549890040D0ED /* ViewController.swift in Sources */,
 				7E1E95751A1549890040D0ED /* MapTest.xcdatamodeld in Sources */,
 				7E1E959B1A1565D70040D0ED /* PopoverView.swift in Sources */,
+				7E957A961A198C9400FE9F9F /* SideMenuViewController.swift in Sources */,
 				7E1E95721A1549890040D0ED /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
