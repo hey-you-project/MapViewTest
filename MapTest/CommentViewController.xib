@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="HEAVYWEI.TTF">
+            <string>Heavyweight</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommentViewController" customModule="MapTest" customModuleProvider="target">
+            <connections>
+                <outlet property="picker" destination="anj-Yq-2sC" id="UUW-wX-Jp1"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ay-SU-PzX">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="7jk-uI-tKC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fvj-Rt-cAn">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="3So-zt-HIo">
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <vibrancyEffect>
+                                    <blurEffect style="light"/>
+                                </vibrancyEffect>
+                            </visualEffectView>
+                        </subviews>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hey You!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZi-Pi-R6U">
+                    <rect key="frame" x="8" y="16" width="584" height="43"/>
+                    <fontDescription key="fontDescription" name="Heavyweight" family="Heavyweight" pointSize="42"/>
+                    <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anj-Yq-2sC">
+                    <rect key="frame" x="0.0" y="9" width="600" height="162"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="CaZ-GJ-EGj"/>
+                        <outlet property="delegate" destination="-1" id="G5S-uT-GOS"/>
+                    </connections>
+                </pickerView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="3Ay-SU-PzX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8Xj-n4-1PZ"/>
+                <constraint firstAttribute="trailing" secondItem="3Ay-SU-PzX" secondAttribute="trailing" id="AAK-HP-Ep9"/>
+                <constraint firstItem="anj-Yq-2sC" firstAttribute="top" secondItem="QZi-Pi-R6U" secondAttribute="bottom" constant="-50" id="Bxi-LY-cTy"/>
+                <constraint firstAttribute="trailing" secondItem="QZi-Pi-R6U" secondAttribute="trailing" constant="8" id="Fvn-5g-fmo"/>
+                <constraint firstItem="anj-Yq-2sC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Gay-FR-Pzt"/>
+                <constraint firstAttribute="bottom" secondItem="3Ay-SU-PzX" secondAttribute="bottom" id="MLT-p1-bO4"/>
+                <constraint firstItem="QZi-Pi-R6U" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="OpJ-fa-LdY"/>
+                <constraint firstItem="QZi-Pi-R6U" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="eXp-el-fUq"/>
+                <constraint firstAttribute="trailing" secondItem="anj-Yq-2sC" secondAttribute="trailing" id="nCa-XL-yM6"/>
+                <constraint firstItem="3Ay-SU-PzX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="vee-ua-RjJ"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

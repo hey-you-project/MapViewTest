@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E09837E1A1974D600CC461B /* typicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E09837D1A1974D600CC461B /* typicons.ttf */; };
 		7E1E95721A1549890040D0ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1E95711A1549890040D0ED /* AppDelegate.swift */; };
 		7E1E95751A1549890040D0ED /* MapTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7E1E95731A1549890040D0ED /* MapTest.xcdatamodeld */; };
 		7E1E95771A1549890040D0ED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1E95761A1549890040D0ED /* ViewController.swift */; };
@@ -14,6 +15,10 @@
 		7E1E957C1A1549890040D0ED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E1E957B1A1549890040D0ED /* Images.xcassets */; };
 		7E1E957F1A1549890040D0ED /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E1E957D1A1549890040D0ED /* LaunchScreen.xib */; };
 		7E1E958B1A1549890040D0ED /* MapTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1E958A1A1549890040D0ED /* MapTestTests.swift */; };
+		7E1E95961A154C710040D0ED /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1E95941A154C710040D0ED /* CommentViewController.swift */; };
+		7E1E95971A154C710040D0ED /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E1E95951A154C710040D0ED /* CommentViewController.xib */; };
+		7E1E95991A155C980040D0ED /* HEAVYWEI.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 7E1E95981A155C980040D0ED /* HEAVYWEI.TTF */; };
+		7E1E959B1A1565D70040D0ED /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1E959A1A1565D70040D0ED /* PopoverView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E09837D1A1974D600CC461B /* typicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = typicons.ttf; sourceTree = "<group>"; };
 		7E1E956C1A1549890040D0ED /* MapTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E1E95701A1549890040D0ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7E1E95711A1549890040D0ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +44,10 @@
 		7E1E95841A1549890040D0ED /* MapTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E1E95891A1549890040D0ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7E1E958A1A1549890040D0ED /* MapTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTestTests.swift; sourceTree = "<group>"; };
+		7E1E95941A154C710040D0ED /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		7E1E95951A154C710040D0ED /* CommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentViewController.xib; sourceTree = "<group>"; };
+		7E1E95981A155C980040D0ED /* HEAVYWEI.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = HEAVYWEI.TTF; sourceTree = "<group>"; };
+		7E1E959A1A1565D70040D0ED /* PopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +91,9 @@
 			children = (
 				7E1E95711A1549890040D0ED /* AppDelegate.swift */,
 				7E1E95761A1549890040D0ED /* ViewController.swift */,
+				7E1E959A1A1565D70040D0ED /* PopoverView.swift */,
+				7E1E95941A154C710040D0ED /* CommentViewController.swift */,
+				7E1E95951A154C710040D0ED /* CommentViewController.xib */,
 				7E1E95781A1549890040D0ED /* Main.storyboard */,
 				7E1E957B1A1549890040D0ED /* Images.xcassets */,
 				7E1E957D1A1549890040D0ED /* LaunchScreen.xib */,
@@ -93,6 +106,8 @@
 		7E1E956F1A1549890040D0ED /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7E09837D1A1974D600CC461B /* typicons.ttf */,
+				7E1E95981A155C980040D0ED /* HEAVYWEI.TTF */,
 				7E1E95701A1549890040D0ED /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -195,7 +210,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E1E95971A154C710040D0ED /* CommentViewController.xib in Resources */,
+				7E09837E1A1974D600CC461B /* typicons.ttf in Resources */,
 				7E1E957A1A1549890040D0ED /* Main.storyboard in Resources */,
+				7E1E95991A155C980040D0ED /* HEAVYWEI.TTF in Resources */,
 				7E1E957F1A1549890040D0ED /* LaunchScreen.xib in Resources */,
 				7E1E957C1A1549890040D0ED /* Images.xcassets in Resources */,
 			);
@@ -215,8 +233,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E1E95961A154C710040D0ED /* CommentViewController.swift in Sources */,
 				7E1E95771A1549890040D0ED /* ViewController.swift in Sources */,
 				7E1E95751A1549890040D0ED /* MapTest.xcdatamodeld in Sources */,
+				7E1E959B1A1565D70040D0ED /* PopoverView.swift in Sources */,
 				7E1E95721A1549890040D0ED /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,6 +431,7 @@
 				7E1E95901A1549890040D0ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7E1E95911A1549890040D0ED /* Build configuration list for PBXNativeTarget "MapTestTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +440,7 @@
 				7E1E95931A1549890040D0ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
