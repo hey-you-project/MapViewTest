@@ -15,6 +15,8 @@ class ViewController: UIViewController {
   var mapView : MKMapView!
   var currentCommentViewController : CommentViewController!
   var sideMenuVC : SideMenuViewController!
+  var hamburgerWrapper : UIView!
+  var hamburgerLabel : UILabel!
   
   // MARK: Subviews and UI Elements
   var originalCircleCenter : CGPoint!
@@ -29,9 +31,11 @@ class ViewController: UIViewController {
   let customBeige       = UIColor(red: 224 / 255.0, green: 228 / 255.0, blue: 204 / 255.0, alpha: 1)
   
   // MARK: Constants
-  var HORIZONTAL_CURVE_OFFSET = 2
-  var VERTICAL_CURVE_OFFSET = 15
+  var kHorizontalCurveOffset : CGFloat = 2
+  var kVerticalCurveOffset   : CGFloat = 15
+  var kPopupHeight           : CGFloat = 540
   
+  // MARK: - Lifecycle Methods
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -68,7 +72,6 @@ class ViewController: UIViewController {
     draggableCircle.layer.shadowRadius = 1.0
     draggableCircle.layer.shadowOffset = CGSize(width: 0, height: 2)
     
-    
     self.view.addSubview(dragCircleWrapper)
     self.view.addSubview(draggableCircle)
     
@@ -80,16 +83,16 @@ class ViewController: UIViewController {
   
   func addHamburgerMenuCircle() {
     
-    var circleView = UIView(frame: CGRect(x: self.view.frame.origin.x + 40, y: self.view.frame.height - 100, width: 60, height: 60))
-    circleView.layer.cornerRadius = circleView.frame.height / 2
-    circleView.backgroundColor = customBeige
-    circleView.layer.shadowColor = UIColor.blackColor().CGColor
-    circleView.layer.shadowOpacity = 0.6
-    circleView.layer.shadowRadius = 3.0
-    circleView.layer.shadowOffset = CGSize(width: 0, height: 3)
-    self.view.addSubview(circleView)
+    hamburgerWrapper = UIView(frame: CGRect(x: self.view.frame.origin.x + 40, y: self.view.frame.height - 100, width: 60, height: 60))
+    hamburgerWrapper.layer.cornerRadius = hamburgerWrapper.frame.height / 2
+    hamburgerWrapper.backgroundColor = customBeige
+    hamburgerWrapper.layer.shadowColor = UIColor.blackColor().CGColor
+    hamburgerWrapper.layer.shadowOpacity = 0.6
+    hamburgerWrapper.layer.shadowRadius = 3.0
+    hamburgerWrapper.layer.shadowOffset = CGSize(width: 0, height: 3)
+    self.view.addSubview(hamburgerWrapper)
     
-    var hamburgerLabel = UILabel(frame: CGRect(origin: CGPoint(x: circleView.bounds.origin.x + 19, y: circleView.bounds.origin.y + 17.5), size: CGSize(width: 25, height: 25)))
+    hamburgerLabel = UILabel(frame: CGRect(origin: CGPoint(x: hamburgerWrapper.bounds.origin.x + 19, y: hamburgerWrapper.bounds.origin.y + 17.5), size: CGSize(width: 25, height: 25)))
     hamburgerLabel.text = "\u{e116}"
     hamburgerLabel.font = UIFont(name: "typicons", size: 30)
     hamburgerLabel.textColor = customDarkOrange
@@ -99,11 +102,11 @@ class ViewController: UIViewController {
     hamburgerLabel.layer.shadowRadius = 1.0
     hamburgerLabel.layer.shadowOffset = CGSize(width: 0, height: 2)
     
-    circleView.addSubview(hamburgerLabel)
+    hamburgerWrapper.addSubview(hamburgerLabel)
     
     let tap = UITapGestureRecognizer()
     tap.addTarget(self, action: "receivedTapGestureOnHamburgerButton:")
-    circleView.addGestureRecognizer(tap)
+    hamburgerWrapper.addGestureRecognizer(tap)
     
   }
   
@@ -113,9 +116,11 @@ class ViewController: UIViewController {
     self.view.addSubview(currentCommentViewController.view)
     currentCommentViewController.view.alpha = 0
     
-    currentCommentViewController.view.frame = CGRect(x: self.view.frame.origin.x + 20, y: point.y - 170, width: self.view.frame.width - 40, height: 200)
+    currentCommentViewController.view.frame = CGRect(x: self.view.frame.origin.x + 20, y: point.y - (kPopupHeight - 30), width: self.view.frame.width - 40, height: kPopupHeight)
     
-    let newRect = CGRect(x: currentCommentViewController.view.bounds.origin.x, y: currentCommentViewController.view.bounds.origin.y, width: currentCommentViewController.view.bounds.width, height: currentCommentViewController.view.bounds.height - 50)
+    let vcBounds = currentCommentViewController.view.bounds
+    
+    let newRect = CGRect(x: vcBounds.origin.x, y: vcBounds.origin.y, width: vcBounds.width, height: vcBounds.height - 50)
     
     let path = UIBezierPath(roundedRect: newRect, cornerRadius: 10)
     
@@ -131,11 +136,6 @@ class ViewController: UIViewController {
     CGPathAddArcToPoint (triangle, nil, newTouchPoint.x + 3,  newTouchPoint.y - 15, newTouchPoint.x, newTouchPoint.y, 20)
     CGPathAddLineToPoint(triangle, nil, newTouchPoint.x,      newTouchPoint.y)
     CGPathCloseSubpath  (triangle)
-    
-    //      CGPathMoveToPoint(triangle, nil, self.view.frame.width / 2, self.view.frame.height - 20)
-    //      CGPathAddLineToPoint(triangle, nil, (self.view.frame.width / 2) - 20, self.view.frame.height - 60)
-    //      CGPathAddLineToPoint(triangle, nil, (self.view.frame.width / 2) + 20, self.view.frame.height - 60)
-    //      CGPathAddLineToPoint(triangle, nil, self.view.frame.width / 2, self.view.frame.height - 20)
     
     CGPathAddPath(combinedPath, nil, triangle)
     let shapeLayer = CAShapeLayer()
@@ -180,15 +180,24 @@ class ViewController: UIViewController {
   func receivedTapGestureOnHamburgerButton(sender: UITapGestureRecognizer){
     
     if sender.state == .Ended {
-      println("Did press hamburger!")
       self.toggleSideMenu()
     }
     
   }
   
-  func toggleSideMenu() {
+  func receivedPanFromLeftEdge(sender: UIScreenEdgePanGestureRecognizer) {
+    
+    if sender.state == .Changed {
+      let offsetX = sender.translationInView(self.view).x
+      mapView.frame.origin.x = offsetX
+      
+    }
+  }
   
+  func toggleSideMenu() {
+  if self.mapView.frame.origin.x == 0{
     returnDragCircleToHomeBase()
+    }
     unpopCurrentComment()
     
     UIView.animateWithDuration(0.4,
@@ -201,14 +210,31 @@ class ViewController: UIViewController {
           self.mapView.center.x += 200
           self.dragCircleWrapper.center.x += 200
           self.draggableCircle.center.x += 200
+          self.hamburgerWrapper.layer.shadowOffset = CGSize(width: 0, height: 6)
+          self.hamburgerWrapper.layer.shadowRadius = 4.0
+         
         } else {
           self.mapView.center.x -= 200
           self.dragCircleWrapper.center.x -= 200
           self.draggableCircle.center = self.originalCircleCenter
+          self.hamburgerWrapper.layer.shadowOffset = CGSize(width: 0, height: 3)
+          self.hamburgerWrapper.layer.shadowRadius = 3.0
+          
         }
       }) { (success) -> Void in
         return ()
     }
+    
+      if self.mapView.frame.origin.x == 0{
+        self.hamburgerLabel.text = "\u{e116}"
+        self.hamburgerLabel.transform = CGAffineTransformMakeScale(1, 1)
+        self.hamburgerLabel.center.x -= 6
+      } else {
+        self.hamburgerLabel.text = "\u{e122}"
+        self.hamburgerLabel.transform = CGAffineTransformMakeScale(1.4, 1.4)
+        self.hamburgerLabel.center.x += 6
+      }
+
   }
   
   func returnDragCircleToHomeBase() {
@@ -269,9 +295,9 @@ class ViewController: UIViewController {
     mapView.addGestureRecognizer(tapRecognizer)
     
     let edgePanRecognizer = UIScreenEdgePanGestureRecognizer()
-    edgePanRecognizer.addTarget(self, action: "didPanFromLeftEdge:")
+    edgePanRecognizer.addTarget(self, action: "receivedPanFromLeftEdge:")
     edgePanRecognizer.edges = UIRectEdge.Left
-    mapView.addGestureRecognizer(edgePanRecognizer)
+    self.view.addGestureRecognizer(edgePanRecognizer)
     
   }
   
